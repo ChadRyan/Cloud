@@ -16,9 +16,9 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>guestbook</servlet-name>
-        <url-pattern>/guestbook</url-pattern>
+        <url-pattern>/chatroom</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>guestbook.jsp</welcome-file>
+        <welcome-file>chatroom.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

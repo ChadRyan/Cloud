@@ -20,11 +20,11 @@
 <body>
 
 <%
-    String guestbookName = request.getParameter("guestbookName");
-    if (guestbookName == null) {
-        guestbookName = "default";
+    String chatroom = request.getParameter("chatroom");
+    if (chatroom == null) {
+        chatroom = "default";
     }
-    pageContext.setAttribute("guestbookName", guestbookName);
+    pageContext.setAttribute("chatroom", chatroom);
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     if (user != null) {
@@ -38,25 +38,25 @@
 %>
 <p>Hello!
     <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-    to include your name with greetings you post.</p>
+    to include your name with messages you post.</p>
 <%
     }
 %>
 
 <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
+    Key guestbookKey = KeyFactory.createKey("Guestbook", chatroom);
     // Run an ancestor query to ensure we see the most up-to-date
     // view of the Greetings belonging to the selected Guestbook.
     Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING);
     List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
     if (greetings.isEmpty()) {
 %>
-<p>Guestbook '${fn:escapeXml(guestbookName)}' has no messages.</p>
+<p>Chatroom '${fn:escapeXml(chatroom)}' has no messages.</p>
 <%
 } else {
 %>
-<p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
+<p>Messages in Chatroom '${fn:escapeXml(chatroom)}'.</p>
 <%
     for (Entity greeting : greetings) {
         pageContext.setAttribute("greeting_content",
@@ -81,12 +81,12 @@
 
 <form action="/sign" method="post">
     <div><textarea name="content" rows="3" cols="60"></textarea></div>
-    <div><input type="submit" value="Post Greeting"/></div>
-    <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
+    <div><input type="submit" value="Post Message"/></div>
+    <input type="hidden" name="chatroom" value="${fn:escapeXml(chatroom)}"/>
 </form>
-<form action="/guestbook.jsp" method="get">
-    <div><input type="text" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/></div>
-    <div><input type="submit" value="Switch Guestbook"/></div>
+<form action="/chatroom.jsp" method="get">
+    <div><input type="text" name="chatroom" value="${fn:escapeXml(chatroom)}"/></div>
+    <div><input type="submit" value="Switch Chatroom"/></div>
 </form>
 
 </body>

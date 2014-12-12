@@ -23,8 +23,8 @@ public class SignGuestbookServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
 
-    String guestbookName = req.getParameter("guestbookName");
-    Key guestbookKey = KeyFactory.createKey("Guestbook", guestbookName);
+    String chatroom = req.getParameter("chatroom");
+    Key guestbookKey = KeyFactory.createKey("Guestbook", chatroom);
     String content = req.getParameter("content");
     Date date = new Date();
     Entity greeting = new Entity("Greeting", guestbookKey);
@@ -35,6 +35,6 @@ public class SignGuestbookServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(greeting);
 
-    resp.sendRedirect("/guestbook.jsp?guestbookName=" + guestbookName);
+    resp.sendRedirect("/chatroom.jsp?chatroom=" + chatroom);
   }
 }
