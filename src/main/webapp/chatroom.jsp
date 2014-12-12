@@ -45,10 +45,10 @@
 
 <%
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Key guestbookKey = KeyFactory.createKey("Guestbook", chatroom);
+    Key chatroomKey = KeyFactory.createKey("chatroom", chatroom);
     // Run an ancestor query to ensure we see the most up-to-date
-    // view of the Greetings belonging to the selected Guestbook.
-    Query query = new Query("Greeting", guestbookKey).addSort("date", Query.SortDirection.DESCENDING);
+    // view of the Greetings belonging to the selected chatroom.
+    Query query = new Query("Greeting", chatroomKey).addSort("date", Query.SortDirection.DESCENDING);
     List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
     if (greetings.isEmpty()) {
 %>
@@ -79,7 +79,7 @@
     }
 %>
 
-<form action="/sign" method="post">
+<form action="/send" method="post">
     <div><textarea name="content" rows="3" cols="60"></textarea></div>
     <div><input type="submit" value="Post Message"/></div>
     <input type="hidden" name="chatroom" value="${fn:escapeXml(chatroom)}"/>

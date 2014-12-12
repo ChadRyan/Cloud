@@ -1,2 +1,2 @@
-com\example\guestbook\GuestbookServlet.class
-com\example\guestbook\SignGuestbookServlet.class
+com\example\chatroom\ChatroomServlet.class
+com\example\chatroom\SendMessageServlet.class
